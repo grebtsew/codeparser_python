@@ -12,8 +12,16 @@ class generate_requirements_file():
     path = None
     install_test = False
 
+    def reset_var(self):
+        self.parser_result_token_list = []
+        self.import_list = []
+        self.all_file_names = []
+        self.all_files = []
+        self.install_test = False
+
     def __init__(self, path=None):
         self.path = path
+        self.reset_var()
 
     def start(self, install_test=False):
         # Create parser
@@ -60,6 +68,7 @@ class generate_requirements_file():
         '''
         k = 0
         for file in self.parser_result_token_list:
+
             print("Imports from file : " + self.all_files[k])
             k += 1
             for i in range(len(file[0])):

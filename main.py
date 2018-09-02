@@ -1,12 +1,14 @@
 from parser_python3 import parser_python3
 from generate_requirements_file import generate_requirements_file as gen_req
+from parse_controller import parse_controller
 
 '''
 Run and test implementation from this file
 '''
 
 def main():
-    test_generate_requirements()
+    controll_thread = parse_controller()
+    controll_thread.start()
 
 def test_parser():
     # Create instance of parser for python3 code

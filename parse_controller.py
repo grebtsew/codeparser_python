@@ -5,7 +5,8 @@ import time
 import types
 from subprocess import call
 from generate_requirements_file import generate_requirements_file as gen_req
-
+from user_request import user_request as req
+from file_investigator import file_investigator as f_invest
 
 '''
 This is our parse controller
@@ -17,9 +18,10 @@ class parse_controller(threading.Thread):
 
     func_info = (('help, h', 'show how to use all commands'),
                  ('helpsh', 'open python help shell'),
-                 ('generate_requirements', 'Generates a requirements file, takes path and if there should use install testing'),
+                 ('gen_req', 'Generates a requirements file, takes path and if there should use install testing'),
                  ('clear', 'clear terminal'),
-                 ('documentation_check','Check that all functions, classes and files has been commented correctly. Also display functions and result.'),
+                 ('request','Test user request, takes text and awnsers.'),
+                 ('doc_check','Check that all functions, classes and files has been commented correctly. Also display functions and result.'),
                 ('exit', 'exit program and all threads.'))
 
     def __init__(self):
@@ -68,14 +70,17 @@ class parse_controller(threading.Thread):
         elif s == "clear":
             self.call_clear()
             return True
+        elif s == "request":
+            self.call_request(arg_arr)
+            return True
         elif s == "exit":
             self.call_exit()
             return True
-        elif s== "generate_requirements":
+        elif s== "gen_req":
             self.call_generate_requirements(arg_arr)
             return True
-        elif s== "documentation_check":
-            self.call_documentation_check()
+        elif s== "doc_check":
+            self.call_documentation_check(arg_arr)
             return True
         else:
             return False
@@ -86,8 +91,26 @@ class parse_controller(threading.Thread):
     def str2bool(self, v):
         return v.lower() in ("yes", "true", "t", "1")
 
-    def call_documentation_check(self):
-        pass
+    def call_documentation_check(self, arg_arr):
+        investigate = None
+        if(len(arg_arr) > 1):
+            investigate = f_invest(arg_arr[1])
+        else:
+            investigate = f_invest(arg_arr)
+
+        investigate.start()
+
+    def call_request(self, arg_arr):
+        r = req()
+
+        if(len(arg_arr) > 1):
+            r.reset(arg_arr[1],[])
+
+        if(len(arg_arr) > 2):
+            r.reset(arg_arr[1],arg_arr[2])
+
+        r.request()
+
 
     def call_generate_requirements(self, args):
         if(len(args) == 1):

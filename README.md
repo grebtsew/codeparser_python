@@ -10,15 +10,24 @@ To install needed python3 libraries with pip run:
 ```
 pip install -r requirements.txt
 ```
+When needed imports are installed the program can be started by running:
+```
+python3 main.py
+```
+Use command h or help to get help using the parse controller!
 
 # Parser
 
-Describe the parser here
+This program uses an easy variant of tokens generations where a library reads each line of a file and split each word or symbol after a specific filter.
+The resulting list of words and symbols can be used to see patterns in code quality.
 
 # Generate requirements file
 
-Describe the requirements implementation here
+This program creates a requirements file for a project. It parse each file and search for imports, then test each import against "pip install", filenames and usage.
 
 # Parser Controller and User Request
 
-Describe the controller and request here
+This feature is a parse controller that lets the user controll the program and test functionallity.
+See screenshot below.
+
+![Screenshot](screenshot.png)
